@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" stylesheets="@../res/FXMLCSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.pitagoras.gestaoalunos.controller.FXMLTelaPrincipalController">
+   <bottom>
+      <AnchorPane fx:id="anchorPaneRodape" prefHeight="30.0" prefWidth="600.0" style="-fx-background-color: #164755;" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="687.0" layoutY="5.0" text="WHOAMI - 2020" textFill="WHITE" />
+            <Label layoutX="14.0" layoutY="6.0" text="Jadatech" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+   </bottom>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Cadastros">
+            <items>
+              <MenuItem fx:id="cadAluno" mnemonicParsing="false" onAction="#abrirCadastroAluno" text="Aluno" />
+                  <MenuItem fx:id="cadCurso" mnemonicParsing="false" onAction="#abrirCadastroCurso" text="Curso" />
+                  <MenuItem fx:id="cadProfessor" mnemonicParsing="false" onAction="#abrirCadastroProfessor" text="Professor" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Ferramentas">
+              <items>
+                <MenuItem fx:id="ferMatricula" mnemonicParsing="false" text="Matrícula" />
+              </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="Ajuda">
+            <items>
+              <MenuItem fx:id="ajuSobre" mnemonicParsing="false" onAction="#abrirSobre" text="Sobre" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <AnchorPane fx:id="anchorPaneConteudo" prefHeight="260.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

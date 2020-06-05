@@ -1,0 +1,91 @@
+.root{
+    -fx-font-size: 10pt;
+    -fx-font-family: "Open Sans";
+}
+
+.icons{
+    -fx-font-family: none;
+    -fx-font-size: 18px;
+}
+
+.button {
+    -fx-background-color: #164755;
+    -fx-text-fill: #fff;
+    -fx-pref-height: 30px;
+    -fx-pref-width: 100px;
+}
+
+.button:hover {
+    -fx-background-color: #25679c;
+}
+
+.button:pressed {
+    -fx-background-color: #2576b1;
+}
+
+.button.confirm {
+    -fx-background-color: #1c752a;
+}
+
+.button.confirm:hover {
+    -fx-background-color: #1ca351;
+}
+
+.button.confirm:pressed {
+    -fx-background-color: #1ca852;
+}
+
+.button.delete {
+    -fx-background-color: #a64130;
+}
+
+.button.delete:hover {
+    -fx-background-color: #e14130;
+}
+
+.button.delete:pressed {
+    -fx-background-color: #ff4130;
+}
+
+
+.text-field{
+    -fx-background-color: transparent;
+    -fx-border-color: #164755;
+    -fx-border-width: 0px 0px 2px 0px;
+}
+
+.text-field:focused{
+    -fx-border-color: #25679c;
+}
+
+.menu-bar{
+      -fx-background-color: #164755; 
+}
+
+.menu-bar .label{
+    -fx-text-fill: #fff;
+}
+
+.menu-button:hover{
+    -fx-background-color: #25679c;
+}
+
+.menu-button:showing{
+    -fx-background-color: #25679c;
+}
+
+
+.menu-item {
+    -fx-background-color: #164755; 
+}
+
+.menu-item:hover{
+    -fx-background-color: #25679c;
+}
+
+.context-menu 
+{
+    -fx-background-color: #164755; 
+    -fx-border-color: transparent;
+    -fx-border-style: none;
+}

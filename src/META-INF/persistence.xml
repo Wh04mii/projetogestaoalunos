@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="JadatechORM" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>br.pitagoras.gestaoalunos.model.Cliente</class>
+    <class>br.pitagoras.gestaoalunos.model.Produto</class>
+    <class>br.pitagoras.gestaoalunos.model.Professor</class>
+    <class>br.pitagoras.gestaoalunos.model.Aluno</class>
+    <class>br.pitagoras.gestaoalunos.model.Curso</class>
+    <class>br.pitagoras.gestaoalunos.model.Matricula</class>
+    <class>br.pitagoras.gestaoalunos.Matricula</class>
+    <class>br.pitagoras.gestaoalunos.Curso</class>
+    <class>br.pitagoras.gestaoalunos.model.Curso_1</class>
+    <class>br.pitagoras.gestaoalunos.model.Matricula_1</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/dbjadatech?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="root"/>
+    </properties>
+  </persistence-unit>
+</persistence>
