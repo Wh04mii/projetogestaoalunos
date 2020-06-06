@@ -57,14 +57,14 @@ public class FXMLLoginController implements Initializable {
                     || (usuario.equals("admin") && senha.equals("admin"))) {              
 
                 // com usuario encontrado abre a tela principal do sistema.
-                new Utils.BuilderTela()
+                new Utils.Tela()
                         .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLTelaPrincipal.fxml")
                         .ehTelaExterna(false)
                         .addTituloTelaExter("Sistema de Gestão de Alunos")
                         .redimensionarTelaExter(false)
-                        .telaCheiaTelaExter()
+                        .exibirTelaCheiaExtern()
                         .exibirEsperarTelaExter()
-                        .build();
+                        .constroi();
                 
                 // Encerra tela atual
                 Stage stage = (Stage) btnEntrar.getScene().getWindow();
