@@ -175,6 +175,7 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
     public void initialize(URL url, ResourceBundle rb) {
         preecherComboBoxProfessor(null);
 
+
     }
 
     public void inicializaCampos(int id) {
