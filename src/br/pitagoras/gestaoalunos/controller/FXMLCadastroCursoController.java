@@ -53,19 +53,19 @@ public class FXMLCadastroCursoController implements Initializable {
     private void alterar(ActionEvent event) {
 
         if (tblViewCurso.getSelectionModel().getSelectedItem() == null) {
-            new Utils.BuilderExibeMsg()
+            new Utils.Mensagem()
                     .addTituloJanela("Atenção")
                     .addMsgConteudo("Nenhum cadastro selecionado.")
                     .addTipoMsg(Alert.AlertType.INFORMATION)
-                    .build();
+                    .exibir();
             return;
         }
 
-        Utils utilsTela = new Utils.BuilderTela()
+        Utils utilsTela = new Utils.Tela()
                 .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroCursoAlterarInserir.fxml")
                 .ehTelaInterna(true)
                 .addAnchorPaneTelaInter(anchorPaneGeral)
-                .build();
+                .construir();
 
         FXMLCadastroCursoAlterarInserirController controller = (FXMLCadastroCursoAlterarInserirController) utilsTela.getController();
         controller.inicializaCampos(tblViewCurso.getSelectionModel().getSelectedItem().getIdCurso());
@@ -90,11 +90,11 @@ public class FXMLCadastroCursoController implements Initializable {
 
     @FXML
     private void inserir(ActionEvent event) {
-        new Utils.BuilderTela()
+        new Utils.Tela()
                 .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroCursoAlterarInserir.fxml")
                 .ehTelaInterna(true)
                 .addAnchorPaneTelaInter(anchorPaneGeral)
-                .build();
+                .construir();
         
         /* FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/pitagoras/gestaoalunos/view/FXMLCadastroCursoAlterarInserir.fxml"));
         AbrirTela tela = new AbrirTela();
@@ -121,11 +121,11 @@ public class FXMLCadastroCursoController implements Initializable {
             tblViewCurso.setItems(observableListCurso);
 
         } else {
-            new Utils.BuilderExibeMsg()
+            new Utils.Mensagem()
                     .addTituloJanela("Atenção")
                     .addMsgConteudo("Nenhum registro encontrado.")
                     .addTipoMsg(Alert.AlertType.INFORMATION)
-                    .build();
+                    .exibir();
         }
     }
 

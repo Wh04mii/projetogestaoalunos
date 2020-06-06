@@ -14,20 +14,19 @@ import javafx.stage.StageStyle;
 
 public class Utils {
 
-    // Objeto para acessar o controller de fora da classe
+    // Objeto para acessar o controller externamente.
     private Object controller;
 
     public Object getController() {
         return controller;
     }
 
-    // Construtor que recebe um builder tela e inicia o object controller.
-    private Utils(BuilderTela builderTela) {
-        this.controller = builderTela.controller();
+    private Utils(Tela tela) {
+        this.controller = tela.controller();
     }
 
-    // Classe estática para implementar o pattern Builder
-    public static class BuilderTela {
+    // Classe estática implementando o pattern Builder que vai retornar a tela.
+    public static class Tela {
 
         /*  Nomenclatura
             TelaInter = tela interna, abre sobre o anchorPane;
@@ -38,57 +37,57 @@ public class Utils {
         private Stage stage;
         private boolean telaInterna;
         private boolean telaExterna;
-        private boolean exibirEsperarTelaExterna;
+        private boolean exibirEsperarTelaExter;
 
-        // Construtor inicializando o loader
-        public BuilderTela() {
+        // Construtor inicializando o loader.
+        public Tela() {
             this.loader = new FXMLLoader();
             this.telaInterna = false;
             this.telaExterna = false;
         }
 
-        public BuilderTela addCaminhoFXML(String caminho) {
+        public Tela addCaminhoFXML(String caminho) {
             this.loader.setLocation(getClass().getResource(caminho));
             return this;
         }
 
-        public BuilderTela ehTelaInterna(boolean resposta) {
+        public Tela ehTelaInterna(boolean resposta) {
             this.telaInterna = true;
             return this;
         }
 
-        public BuilderTela ehTelaExterna(boolean resposta) {
+        public Tela ehTelaExterna(boolean resposta) {
             this.stage = new Stage();
             this.telaExterna = true;
             return this;
         }
 
-        public BuilderTela addAnchorPaneTelaInter(AnchorPane anchorPane) {
+        public Tela addAnchorPaneTelaInter(AnchorPane anchorPane) {
             this.anchorPane = anchorPane;
             return this;
         }
 
-        public BuilderTela addTituloTelaExter(String titulo) {
+        public Tela addTituloTelaExter(String titulo) {
             stage.setTitle(titulo);
             return this;
         }
 
-        public BuilderTela redimensionarTelaExter(boolean resposta) {
+        public Tela redimensionarTelaExter(boolean resposta) {
             this.stage.setResizable(resposta);
             return this;
         }
 
-        public BuilderTela centralizaTelaExterna() {
+        public Tela centralizarTelaExter() {
             this.stage.centerOnScreen();
             return this;
         }
 
-        public BuilderTela estiloTelaExter(StageStyle stageStyle) {
+        public Tela estiloTelaExter(StageStyle stageStyle) {
             this.stage.initStyle(stageStyle);
             return this;
         }
 
-        public BuilderTela telaCheiaTelaExter() {
+        public Tela exibirTelaCheiaExter() {
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();
             this.stage.setWidth(bounds.getWidth());
@@ -96,33 +95,35 @@ public class Utils {
             return this;
         }
 
-        public BuilderTela exibirEsperarTelaExter() {
-            this.exibirEsperarTelaExterna = true;
+        public Tela exibirEsperarTelaExter() {
+            this.exibirEsperarTelaExter = true;
             return this;
         }
 
-        public Utils build() {
-            // Valida o caminho FXML
+        public Utils construir() {
+            // Verifica se o caminho do FXML é válido.
             if (this.loader.getLocation() == null) {
-                new BuilderExibeMsg()
+                new Mensagem()
                         .addTituloJanela("Erro")
                         .addMsgCabecalho("Ocorreu um erro ao abrir a janela.")
                         .addMsgConteudo("O caminho FXML não foi encontrado.")
                         .addTipoMsg(Alert.AlertType.ERROR)
-                        .build();
+                        .exibir();
                 return null;
             }
 
+            // Verifica se foi especificado o tipo de tela a ser retornardo.
             if (!telaExterna && !telaInterna) {
-                new BuilderExibeMsg()
+                new Mensagem()
                         .addTituloJanela("Erro")
                         .addMsgCabecalho("Ocorreu um erro ao abrir a janela.")
                         .addMsgConteudo("Tipo de tela não definida.")
                         .addTipoMsg(Alert.AlertType.ERROR)
-                        .build();
+                        .exibir();
                 return null;
             }
 
+            // Verifica qual tipo de tela vai retornar.
             if (telaInterna) {
                 retornaTelaInter();
             } else if (telaExterna) {
@@ -132,11 +133,12 @@ public class Utils {
             return new Utils(this);
         }
 
+        // Retornar o controller para acessar os métodos do FXML acessado.
         private Object controller() {
             return this.loader.getController();
         }
 
-        // Constroi tela interna
+        // Método resposável por constroir e retornar a tela interna.
         private void retornaTelaInter() {
             try {
                 AnchorPane pane = loader.load();
@@ -147,69 +149,74 @@ public class Utils {
                 anchorPane.getChildren().clear();
                 anchorPane.getChildren().addAll(pane);
             } catch (IOException ex) {
-                new BuilderExibeMsg()
+                new Mensagem()
                         .addTituloJanela("Erro")
                         .addMsgCabecalho("Ocorreu um erro ao abrir a janela.")
                         .addMsgConteudo(UtilsAntigo.class.getName() + "\n" + ex.toString())
                         .addTipoMsg(Alert.AlertType.ERROR)
-                        .build();
+                        .exibir();
             }
         }
 
+        // Método resposável por construir e retornar a tela externa.
         private void retornaTelaExter() {
             try {
                 Parent parent = (Parent) loader.load();
                 Scene scene = new Scene(parent);
                 stage.setScene(scene);
                 stage.initModality(Modality.APPLICATION_MODAL);
-                if (!exibirEsperarTelaExterna) {
+
+                // Verifica se o stage vai exibir e aguardar o usuário.
+                if (!exibirEsperarTelaExter) {
                     stage.showAndWait();
                 } else {
                     stage.show();
                 }
 
             } catch (IOException ex) {
-                new BuilderExibeMsg()
+                new Mensagem()
                         .addTituloJanela("Erro")
                         .addMsgCabecalho("Ocorreu um erro ao abrir a janela.")
                         .addMsgConteudo(UtilsAntigo.class.getName() + "\n" + ex.toString())
                         .addTipoMsg(Alert.AlertType.ERROR)
-                        .build();
+                        .exibir();
             }
         }
     }
 
-    public static class BuilderExibeMsg {
+    // Classe estática implementando o pattern Builder que vai retornar mensagem.
+    public static class Mensagem {
 
         private String tituloJanela;
         private String msgCabecalho;
         private String msgConteudo;
         private String tipoAlerta;
 
-        public BuilderExibeMsg() {
+        public Mensagem() {
         }
 
-        public BuilderExibeMsg addTipoMsg(Alert.AlertType alertType) {
+        public Mensagem addTipoMsg(Alert.AlertType alertType) {
             this.tipoAlerta = alertType.toString();
             return this;
         }
 
-        public BuilderExibeMsg addTituloJanela(String tituloJanela) {
+        public Mensagem addTituloJanela(String tituloJanela) {
             this.tituloJanela = tituloJanela;
             return this;
         }
 
-        public BuilderExibeMsg addMsgCabecalho(String msgCabecalho) {
+        public Mensagem addMsgCabecalho(String msgCabecalho) {
             this.msgCabecalho = msgCabecalho;
             return this;
         }
 
-        public BuilderExibeMsg addMsgConteudo(String msgConteudo) {
+        public Mensagem addMsgConteudo(String msgConteudo) {
             this.msgConteudo = msgConteudo;
             return this;
         }
 
-        public Alert build() {
+        // Retornar o alert.
+        public Alert exibir() {
             Alert alert = new Alert(Alert.AlertType.valueOf(tipoAlerta));
             alert.setTitle(tituloJanela);
             alert.setHeaderText(msgCabecalho);
