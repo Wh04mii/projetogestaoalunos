@@ -37,12 +37,12 @@ public class FXMLTelaPrincipalController implements Initializable {
     @FXML
     private void abrirCadastroAluno(ActionEvent event) {
 
-        new Utils.Tela()
+        new Utils.BuilderTela()
                 .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroAluno.fxml")
                 .ehTelaExterna(true)
                 .addTituloTelaExter("Cadastro de Alunos")
                 .redimensionarTelaExter(false)
-                .constroi();
+                .build();
 
         /*   FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/pitagoras/gestaoalunos/view/FXMLCadastroAluno.fxml"));
           UtilsAntigo.retornaJanela(loader, "Cadastro de Alunos");
@@ -53,12 +53,12 @@ public class FXMLTelaPrincipalController implements Initializable {
     @FXML
     private void abrirCadastroCurso(ActionEvent event) {
 
-        new Utils.Tela()
+        new Utils.BuilderTela()
                 .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroCurso.fxml")
                 .ehTelaExterna(true)
                 .addTituloTelaExter("Cadastro de Cursos")
                 .redimensionarTelaExter(false)
-                .constroi();
+                .build();
 
         /*  FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/pitagoras/gestaoalunos/view/FXMLCadastroCurso.fxml"));
         AbrirTela tela = new AbrirTela();
@@ -69,12 +69,12 @@ public class FXMLTelaPrincipalController implements Initializable {
     @FXML
     private void abrirCadastroProfessor(ActionEvent event) {
 
-        new Utils.Tela()
+        new Utils.BuilderTela()
                 .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroProfessor.fxml")
                 .ehTelaExterna(true)
                 .addTituloTelaExter("Cadastro de Professores")
                 .redimensionarTelaExter(false)
-                .constroi();
+                .build();
 
         /*  FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/pitagoras/gestaoalunos/view/FXMLCadastroProfessor.fxml"));
         AbrirTela tela = new AbrirTela();
@@ -85,7 +85,7 @@ public class FXMLTelaPrincipalController implements Initializable {
     @FXML
     private void abrirSobre(ActionEvent event) {
 
-        new Utils.Mensagem()
+        new Utils.BuilderExibeMsg()
                 .addTituloJanela("Sobre")
                 .addMsgCabecalho("JADATECH - Gereciamento de Alunos - 2020")
                 .addMsgConteudo("Sistemas de Informação - 7ºp \n"
@@ -93,7 +93,7 @@ public class FXMLTelaPrincipalController implements Initializable {
                         + "Guilherme Francisco \n"
                         + "Jefferson Magalhães.")
                 .addTipoMsg(Alert.AlertType.INFORMATION)
-                .exibe();
+                .build();
 
         /*Utils.exibeMensagem("Sobre", "JADATECH - Gereciamento de Alunos - 2020", "Sistemas de Informação - 7ºp \n"
                 + "Lucas Cardoso \n"

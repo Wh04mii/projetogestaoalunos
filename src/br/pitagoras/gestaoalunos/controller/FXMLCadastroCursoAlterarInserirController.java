@@ -58,11 +58,11 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
 
     @FXML
     private void cancelar(ActionEvent event) {
-        new Utils.Tela()
+        new Utils.BuilderTela()
                 .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroCurso.fxml")
                 .ehTelaInterna(true)
                 .addAnchorPaneTelaInter(anchorPaneGeral)
-                .constroi();
+                .build();
 
         /* FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/pitagoras/gestaoalunos/view/FXMLCadastroCurso.fxml"));
         AbrirTela tela = new AbrirTela();
@@ -75,25 +75,25 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
         try {
             CursoDAO cursoDao = new CursoDAO();
             if (cursoDao.deletar(cursoSelecionado)) {
-                new Utils.Mensagem()
+                new Utils.BuilderExibeMsg()
                         .addTituloJanela("Atenção")
                         .addMsgConteudo("Registro excluído com sucesso.")
                         .addTipoMsg(Alert.AlertType.INFORMATION)
-                        .exibe();
+                        .build();
 
-                new Utils.Tela()
+                new Utils.BuilderTela()
                         .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroCurso.fxml")
                         .ehTelaInterna(true)
                         .addAnchorPaneTelaInter(anchorPaneGeral)
-                        .constroi();
+                        .build();
             }
         } catch (Exception e) {
-            new Utils.Mensagem()
+            new Utils.BuilderExibeMsg()
                     .addTituloJanela("Atenção")
                     .addMsgCabecalho("Ocorreu um erro ao tentar excluir o registro.")
                     .addMsgConteudo(e.getMessage())
                     .addTipoMsg(Alert.AlertType.INFORMATION)
-                    .exibe();
+                    .build();
         }
     }
 
@@ -114,17 +114,17 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
                 cursoSelecionado.setFkIdProfessor(professorFk);
 
                 if (cursoDao.alterar(cursoSelecionado)) {
-                    new Utils.Mensagem()
+                    new Utils.BuilderExibeMsg()
                             .addTituloJanela("Atenção")
                             .addMsgConteudo("Registro alterado com sucesso.")
                             .addTipoMsg(Alert.AlertType.INFORMATION)
-                            .exibe();
+                            .build();
 
-                    new Utils.Tela()
+                    new Utils.BuilderTela()
                             .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroCurso.fxml")
                             .ehTelaInterna(true)
                             .addAnchorPaneTelaInter(anchorPaneGeral)
-                            .constroi();
+                            .build();
 
                     /*  UtilsAntigo.exibeMensagem("Atenção", null, "Registro alterado com sucesso.", Alert.AlertType.INFORMATION);
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/pitagoras/gestaoalunos/view/FXMLCadastroCurso.fxml"));
@@ -132,12 +132,12 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
                     tela.retornaJanelaInterna(loader, anchorPaneGeral);*/
                 }
             } catch (Exception e) {
-                new Utils.Mensagem()
+                new Utils.BuilderExibeMsg()
                         .addTituloJanela("Atenção")
                         .addMsgCabecalho("Ocorreu um erro ao tentar alterar o registro.")
                         .addMsgConteudo(e.getMessage())
                         .addTipoMsg(Alert.AlertType.INFORMATION)
-                        .exibe();
+                        .build();
                 // UtilsAntigo.exibeMensagem("Atenção", "Ocorreu um erro ao tentar alterar registro.", e.getMessage(), Alert.AlertType.INFORMATION);
             }
         } // insere
@@ -149,17 +149,17 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
                 curso.setFkIdProfessor(professorFk);
 
                 if (cursoDao.inserir(curso)) {
-                    new Utils.Mensagem()
+                    new Utils.BuilderExibeMsg()
                             .addTituloJanela("Atenção")
                             .addMsgConteudo("Registro inserido com sucesso.")
                             .addTipoMsg(Alert.AlertType.INFORMATION)
-                            .exibe();
+                            .build();
 
-                    new Utils.Tela()
+                    new Utils.BuilderTela()
                             .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroCurso.fxml")
                             .ehTelaInterna(true)
                             .addAnchorPaneTelaInter(anchorPaneGeral)
-                            .constroi();
+                            .build();
 
                     /* UtilsAntigo.exibeMensagem("Atenção", null, "Registro inserido com sucesso.", Alert.AlertType.INFORMATION);
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/pitagoras/gestaoalunos/view/FXMLCadastroCurso.fxml"));
@@ -167,12 +167,12 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
                     tela.retornaJanelaInterna(loader, anchorPaneGeral); */
                 }
             } catch (Exception e) {
-                new Utils.Mensagem()
+                new Utils.BuilderExibeMsg()
                         .addTituloJanela("Atenção")
                         .addMsgCabecalho("Ocorreu um erro ao tentar inserir o registro.")
                         .addMsgConteudo(e.getMessage())
                         .addTipoMsg(Alert.AlertType.INFORMATION)
-                        .exibe();
+                        .build();
                 // UtilsAntigo.exibeMensagem("Atenção", "Ocorreu um erro ao tentar inserir registro.", e.getMessage(), Alert.AlertType.INFORMATION);
             }
         }

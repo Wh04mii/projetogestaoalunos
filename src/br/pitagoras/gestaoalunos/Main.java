@@ -10,13 +10,13 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         
-        new Utils.Tela()
+        new Utils.BuilderTela()
                 .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLLogin.fxml")
                 .ehTelaExterna(true)
                 .redimensionarTelaExter(false)
                 .estiloTelaExter(StageStyle.UNDECORATED)
-                .centralizarTelaExter()
-                .constroi();       
+                .centralizaTelaExterna()
+                .build();       
        
     }
 
