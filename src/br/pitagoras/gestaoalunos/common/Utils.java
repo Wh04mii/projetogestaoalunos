@@ -112,7 +112,7 @@ public class Utils {
                 return null;
             }
 
-            // Verifica se foi especificado o tipo de tela a ser retornardo.
+            // Verifica se foi especificado o tipo de tela a ser retornado.
             if (!telaExterna && !telaInterna) {
                 new Mensagem()
                         .addTituloJanela("Erro")
@@ -133,12 +133,12 @@ public class Utils {
             return new Utils(this);
         }
 
-        // Retornar o controller para acessar os métodos do FXML acessado.
+        // Retorna o controller para acessar os métodos do FXML acessado.
         private Object controller() {
             return this.loader.getController();
         }
 
-        // Método resposável por constroir e retornar a tela interna.
+        // Método responsável por construir e retornar a tela interna.
         private void retornaTelaInter() {
             try {
                 AnchorPane pane = loader.load();

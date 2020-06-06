@@ -45,13 +45,18 @@ public class FXMLCadastroCursoController implements Initializable {
     @FXML
     private TableColumn<Curso, String> tblColumnDescricao;
 
-    // utilizados para receber lista do bd e preencher no tbl view
-    private List<Curso> listCurso;
-    private ObservableList<Curso> observableListCurso;
+    @FXML
+    private void inserir(ActionEvent event) {
+        new Utils.Tela()
+                .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroCursoAlterarInserir.fxml")
+                .ehTelaInterna(true)
+                .addAnchorPaneTelaInter(anchorPaneGeral)
+                .construir();
+
+    }
 
     @FXML
     private void alterar(ActionEvent event) {
-
         if (tblViewCurso.getSelectionModel().getSelectedItem() == null) {
             new Utils.Mensagem()
                     .addTituloJanela("Atenção")
@@ -70,62 +75,41 @@ public class FXMLCadastroCursoController implements Initializable {
         FXMLCadastroCursoAlterarInserirController controller = (FXMLCadastroCursoAlterarInserirController) utilsTela.getController();
         controller.inicializaCampos(tblViewCurso.getSelectionModel().getSelectedItem().getIdCurso());
 
-        /*  FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/pitagoras/gestaoalunos/view/FXMLCadastroCursoAlterarInserir.fxml"));
-        AbrirTela tela = new AbrirTela();
-        tela.retornaJanelaInterna(loader, anchorPaneGeral);
-        FXMLCadastroCursoAlterarInserirController controller = (FXMLCadastroCursoAlterarInserirController) loader.getController();
-        controller.inicializaCampos(tblViewCurso.getSelectionModel().getSelectedItem().getIdCurso());*/
     }
 
     @FXML
     private void atualizar(ActionEvent event) {
         atualizarLista();
+
     }
 
     @FXML
     private void fechar(ActionEvent event) {
         Stage stage = (Stage) btnFechar.getScene().getWindow();
         stage.close();
-    }
 
-    @FXML
-    private void inserir(ActionEvent event) {
-        new Utils.Tela()
-                .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroCursoAlterarInserir.fxml")
-                .ehTelaInterna(true)
-                .addAnchorPaneTelaInter(anchorPaneGeral)
-                .construir();
-        
-        /* FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/pitagoras/gestaoalunos/view/FXMLCadastroCursoAlterarInserir.fxml"));
-        AbrirTela tela = new AbrirTela();
-        tela.retornaJanelaInterna(loader, anchorPaneGeral);*/
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         atualizarLista();
+
     }
 
     private void atualizarLista() {
-        CursoDAO cursoDao = new CursoDAO();
-        listCurso = cursoDao.pesquisar();
+        ObservableList<Curso> observableListCurso;
+        List<Curso> listCurso = new CursoDAO().pesquisar();
 
         if (listCurso != null) {
-            // limpa registros existentes.
+            // Limpa registros existentes.
             tblViewCurso.getItems().clear();
-            // passa a identificação dos campos do bd para as colunas.
+            // Passa a identificação dos campos do bd para as colunas.
             tblColumnCargaHoraria.setCellValueFactory(new PropertyValueFactory<>("CargaHoraria"));
             tblColumnDescricao.setCellValueFactory(new PropertyValueFactory<>("DescCurso"));
-            //preenche tblview
+            // Preenche tblview.
             observableListCurso = FXCollections.observableArrayList(listCurso);
             tblViewCurso.setItems(observableListCurso);
 
-        } else {
-            new Utils.Mensagem()
-                    .addTituloJanela("Atenção")
-                    .addMsgConteudo("Nenhum registro encontrado.")
-                    .addTipoMsg(Alert.AlertType.INFORMATION)
-                    .exibir();
         }
     }
 

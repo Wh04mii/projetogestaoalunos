@@ -58,8 +58,13 @@
     -fx-border-color: #25679c;
 }
 
+.text-field:validacao-erro {
+    -fx-border-color: #a64130;
+    -fx-prompt-text-fill: #d98f82;
+}
+
 .menu-bar{
-      -fx-background-color: #164755; 
+    -fx-background-color: #164755; 
 }
 
 .menu-bar .label{

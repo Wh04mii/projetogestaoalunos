@@ -59,7 +59,7 @@
                                       </TextField>
                                       <TextField fx:id="txtCargaHoraria" prefHeight="32.0" prefWidth="448.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                                           <GridPane.margin>
-                                              <Insets right="550.0" />
+                                              <Insets right="540.0" />
                                           </GridPane.margin>
                                       </TextField>
                               <ComboBox fx:id="comboBoxProfessor" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
