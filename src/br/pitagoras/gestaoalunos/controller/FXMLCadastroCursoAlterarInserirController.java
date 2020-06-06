@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -57,21 +58,7 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
     private Professor professor;
 
     @FXML
-    private void cancelar(ActionEvent event) {
-        new Utils.Tela()
-                .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroCurso.fxml")
-                .ehTelaInterna(true)
-                .addAnchorPaneTelaInter(anchorPaneGeral)
-                .construir();
-
-        /* FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/pitagoras/gestaoalunos/view/FXMLCadastroCurso.fxml"));
-        AbrirTela tela = new AbrirTela();
-        tela.retornaJanelaInterna(loader, anchorPaneGeral); */
-    }
-
-    @FXML
     private void excluir(ActionEvent event) {
-
         try {
             CursoDAO cursoDao = new CursoDAO();
             if (cursoDao.deletar(cursoSelecionado)) {
@@ -99,6 +86,9 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
 
     @FXML
     private void salvar(ActionEvent event) {
+        if (!validarCampos()) {
+            return;
+        }
 
         String descricao = txtDescricao.getText();
         Double cargaHoraria = Double.parseDouble(txtCargaHoraria.getText());
@@ -106,7 +96,7 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
 
         CursoDAO cursoDao = new CursoDAO();
 
-        // atulaliza
+        // Atualizar cadastro.
         if (cursoSelecionado != null) {
             try {
                 cursoSelecionado.setDescCurso(descricao);
@@ -126,10 +116,6 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
                             .addAnchorPaneTelaInter(anchorPaneGeral)
                             .construir();
 
-                    /*  UtilsAntigo.exibeMensagem("Atenção", null, "Registro alterado com sucesso.", Alert.AlertType.INFORMATION);
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/pitagoras/gestaoalunos/view/FXMLCadastroCurso.fxml"));
-                    AbrirTela tela = new AbrirTela();
-                    tela.retornaJanelaInterna(loader, anchorPaneGeral);*/
                 }
             } catch (Exception e) {
                 new Utils.Mensagem()
@@ -138,9 +124,9 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
                         .addMsgConteudo(e.getMessage())
                         .addTipoMsg(Alert.AlertType.INFORMATION)
                         .exibir();
-                // UtilsAntigo.exibeMensagem("Atenção", "Ocorreu um erro ao tentar alterar registro.", e.getMessage(), Alert.AlertType.INFORMATION);
+
             }
-        } // insere
+        } // Inserir cadastro.
         else {
             try {
                 Curso curso = new Curso();
@@ -161,10 +147,6 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
                             .addAnchorPaneTelaInter(anchorPaneGeral)
                             .construir();
 
-                    /* UtilsAntigo.exibeMensagem("Atenção", null, "Registro inserido com sucesso.", Alert.AlertType.INFORMATION);
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/pitagoras/gestaoalunos/view/FXMLCadastroCurso.fxml"));
-                    AbrirTela tela = new AbrirTela();
-                    tela.retornaJanelaInterna(loader, anchorPaneGeral); */
                 }
             } catch (Exception e) {
                 new Utils.Mensagem()
@@ -173,27 +155,36 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
                         .addMsgConteudo(e.getMessage())
                         .addTipoMsg(Alert.AlertType.INFORMATION)
                         .exibir();
-                // UtilsAntigo.exibeMensagem("Atenção", "Ocorreu um erro ao tentar inserir registro.", e.getMessage(), Alert.AlertType.INFORMATION);
+
             }
         }
+
+    }
+
+    @FXML
+    private void cancelar(ActionEvent event) {
+        new Utils.Tela()
+                .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroCurso.fxml")
+                .ehTelaInterna(true)
+                .addAnchorPaneTelaInter(anchorPaneGeral)
+                .construir();
 
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         preecheComboBoxProfessor(null);
+
     }
 
     public void inicializaCampos(int id) {
-
-        // habilita componentes
+        // Habilitar componentes.
         btnExcluir.setVisible(true);
         txtId.setVisible(true);
         lblCodigoCadastro.setVisible(true);
 
-        // inicializa componentes
-        CursoDAO cursoDao = new CursoDAO();
-        cursoSelecionado = cursoDao.pesquisar(id);
+        // Inicilizar campos.
+        cursoSelecionado = new CursoDAO().pesquisar(id);
         txtId.setText(String.valueOf(cursoSelecionado.getIdCurso()));
         txtDescricao.setText(cursoSelecionado.getDescCurso());
         txtCargaHoraria.setText(String.valueOf(cursoSelecionado.getCargaHoraria()));
@@ -201,22 +192,55 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
 
     }
 
-    // metodo para buscar os cadastos de professores e inserir no combo
+    // Metódo para buscar os cadastros de professores e inserir no combobox.
     private void preecheComboBoxProfessor(Professor professor) {
-
-        List<Professor> listProfessor;
         ObservableList<Professor> observableListProfessor;
-        ProfessorDAO professorDao = new ProfessorDAO();
-        listProfessor = professorDao.pesquisar();
+        List<Professor> listProfessor = new ProfessorDAO().pesquisar();
 
         observableListProfessor = FXCollections.observableArrayList(listProfessor);
         comboBoxProfessor.getItems().clear();
+        // Primeira linha vazia.
         comboBoxProfessor.getItems().add(null);
         comboBoxProfessor.getItems().addAll(observableListProfessor);
 
-        // se receber um registro, deixa o mesmo selecionado.
+        // Se no banco já tiver vinculado ao professor, seleciona o cadastro do mesmo.
         if (professor != null) {
             comboBoxProfessor.getSelectionModel().select(professor);
         }
+
+    }
+
+    // Metódo para validar os campos obrigatórios.
+    private boolean validarCampos() {
+        /* Fonte https://en.it1352.com/article/a45a2908823a47fcaaf9ff3cbb7fdffb.html */
+        final PseudoClass errorClass = PseudoClass.getPseudoClass("validacao-erro");
+        boolean erro = false;
+        String msg = "Campo obrigatório";
+
+        // Descrição.
+        if (txtDescricao.getText().isEmpty()) {
+            txtDescricao.pseudoClassStateChanged(errorClass, true);
+            txtDescricao.setPromptText(msg);
+            erro = true;
+        } else {
+            txtDescricao.pseudoClassStateChanged(errorClass, false);
+            txtDescricao.setPromptText("");
+        }
+        //Carga Horária.
+        if (txtCargaHoraria.getText().isEmpty()) {
+            txtCargaHoraria.pseudoClassStateChanged(errorClass, true);
+            txtCargaHoraria.setPromptText(msg);
+            erro = true;
+        } else {
+            txtCargaHoraria.pseudoClassStateChanged(errorClass, false);
+            txtCargaHoraria.setPromptText(null);
+        }
+
+        if (erro) {
+            return false;
+        } else {
+            return true;
+        }
+
     }
 }

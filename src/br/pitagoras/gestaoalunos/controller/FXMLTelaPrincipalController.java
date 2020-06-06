@@ -33,10 +33,9 @@ public class FXMLTelaPrincipalController implements Initializable {
     @FXML
     private AnchorPane anchorPaneConteudo;
 
-    // abre a tela de cadastro de alunos
+    // Tela de cadastro de aluno.
     @FXML
     private void abrirCadastroAluno(ActionEvent event) {
-
         new Utils.Tela()
                 .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroAluno.fxml")
                 .ehTelaExterna(true)
@@ -44,31 +43,22 @@ public class FXMLTelaPrincipalController implements Initializable {
                 .redimensionarTelaExter(false)
                 .construir();
 
-        /*   FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/pitagoras/gestaoalunos/view/FXMLCadastroAluno.fxml"));
-          UtilsAntigo.retornaJanela(loader, "Cadastro de Alunos");
-          AbrirTela tela = new AbrirTela();
-          tela.retornaJanela(loader, "Cadastro de Alunos"); */
     }
 
+    // Tela de cadastro de curso.
     @FXML
     private void abrirCadastroCurso(ActionEvent event) {
-
         new Utils.Tela()
                 .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroCurso.fxml")
                 .ehTelaExterna(true)
                 .addTituloTelaExter("Cadastro de Cursos")
                 .redimensionarTelaExter(false)
                 .construir();
-
-        /*  FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/pitagoras/gestaoalunos/view/FXMLCadastroCurso.fxml"));
-        AbrirTela tela = new AbrirTela();
-        tela.retornaJanela(loader, "Cadastro de Cursos"); */
     }
 
-    // abre a tela de cadastro de professor
+    // Tela de cadastro de professor.
     @FXML
     private void abrirCadastroProfessor(ActionEvent event) {
-
         new Utils.Tela()
                 .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroProfessor.fxml")
                 .ehTelaExterna(true)
@@ -76,15 +66,11 @@ public class FXMLTelaPrincipalController implements Initializable {
                 .redimensionarTelaExter(false)
                 .construir();
 
-        /*  FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/pitagoras/gestaoalunos/view/FXMLCadastroProfessor.fxml"));
-        AbrirTela tela = new AbrirTela();
-        tela.retornaJanela(loader, "Cadastro de Professores");*/
     }
 
-    // abre o alertbox sobre
+    // Tela sobre.
     @FXML
     private void abrirSobre(ActionEvent event) {
-
         new Utils.Mensagem()
                 .addTituloJanela("Sobre")
                 .addMsgCabecalho("JADATECH - Gereciamento de Alunos - 2020")
@@ -95,10 +81,6 @@ public class FXMLTelaPrincipalController implements Initializable {
                 .addTipoMsg(Alert.AlertType.INFORMATION)
                 .exibir();
 
-        /*Utils.exibeMensagem("Sobre", "JADATECH - Gereciamento de Alunos - 2020", "Sistemas de Informação - 7ºp \n"
-                + "Lucas Cardoso \n"
-                + "Guilherme Francisco \n"
-                + "Jefferson Magalhães.", Alert.AlertType.INFORMATION);*/
     }
 
     @Override

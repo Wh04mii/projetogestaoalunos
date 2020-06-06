@@ -4,6 +4,7 @@ import br.pitagoras.gestaoalunos.common.Utils;
 import br.pitagoras.gestaoalunos.dao.ProfessorDAO;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -40,74 +41,76 @@ public class FXMLLoginController implements Initializable {
 
         String usuario = txtUsuario.getText();
         String senha = txtSenha.getText();
-        String msg;
 
-        // verifica se os dois campos foram informados.
-        if (usuario.isEmpty() || senha.isEmpty()) {
-            msg = "Usuário ou senha não informados!";
-            lblAlerta.setText(msg);
-            lblAlerta.setVisible(true);
+        // Verificar campos.
+        if (!validarCampos()) {
+            return;
+        }
+
+        ProfessorDAO professorDao = new ProfessorDAO();
+
+        // Validar usuário.
+        if (professorDao.pesquisarUsuario(usuario, senha) != null
+                || (usuario.equals("admin") && senha.equals("admin"))) {
+
+            new Utils.Tela()
+                    .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLTelaPrincipal.fxml")
+                    .ehTelaExterna(false)
+                    .addTituloTelaExter("Sistema de Gestão de Alunos")
+                    .redimensionarTelaExter(false)
+                    .exibirTelaCheiaExter()
+                    .exibirEsperarTelaExter()
+                    .construir();
+
+            // Encerrar a tela atual
+            Stage stage = (Stage) btnEntrar.getScene().getWindow();
+            stage.close();
 
         } else {
-
-            ProfessorDAO professorDao = new ProfessorDAO();
-
-            // chama metodo para validar se o usuario existe no bd
-            if (professorDao.pesquisarUsuario(usuario, senha) != null
-                    || (usuario.equals("admin") && senha.equals("admin"))) {              
-
-                // com usuario encontrado abre a tela principal do sistema.
-                new Utils.Tela()
-                        .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLTelaPrincipal.fxml")
-                        .ehTelaExterna(false)
-                        .addTituloTelaExter("Sistema de Gestão de Alunos")
-                        .redimensionarTelaExter(false)
-                        .exibirTelaCheiaExter()
-                        .exibirEsperarTelaExter()
-                        .construir();
-                
-                // Encerra tela atual
-                Stage stage = (Stage) btnEntrar.getScene().getWindow();
-                stage.close();
-
-                /*   try {
-
-                    FXMLLoader fxmlLoader = new FXMLLoader();
-                    fxmlLoader.setLocation(getClass().getResource("/br/pitagoras/gestaoalunos/view/FXMLTelaPrincipal.fxml"));
-                    Parent root = (Parent) fxmlLoader.load();
-
-                    Scene scene = new Scene(root);
-                    Stage stage = new Stage();
-                    stage.setTitle("Sistema de Gestão de Alunos");
-                    stage.setScene(scene);
-                    stage.setResizable(false);
-                    stage.initModality(Modality.APPLICATION_MODAL);
-
-                    // esconder a tela de login.
-                    btnEntrar.getScene().getWindow().hide();
-
-                    // deixar em tela cheia a tela principal
-                    Screen screen = Screen.getPrimary();
-                    Rectangle2D bounds = screen.getVisualBounds();
-                    stage.setWidth(bounds.getWidth());
-                    stage.setHeight(bounds.getHeight());
-
-                    stage.show();
-
-                } catch (IOException ex) {
-                    Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
-                } */
-            } else {
-                // alerta sobre usuario não encontrado.
-                msg = "Usuário ou senha inválidos!";
-                lblAlerta.setText(msg);
-                lblAlerta.setVisible(true);
-            }
+            // Alerta sobre usuario não encontrado.
+            String msg;
+            msg = "Usuário ou senha inválidos!";
+            lblAlerta.setText(msg);
+            lblAlerta.setVisible(true);
         }
+
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
+    private boolean validarCampos() {
+        /* Fonte https://en.it1352.com/article/a45a2908823a47fcaaf9ff3cbb7fdffb.html */
+        final PseudoClass errorClass = PseudoClass.getPseudoClass("validacao-erro");
+        boolean erro = false;
+        String msg = "Campo obrigatório";
+
+        // Descrição.
+        if (txtUsuario.getText().isEmpty()) {
+            txtUsuario.pseudoClassStateChanged(errorClass, true);
+            txtUsuario.setPromptText(msg);
+            erro = true;
+        } else {
+            txtUsuario.pseudoClassStateChanged(errorClass, false);
+            txtUsuario.setPromptText("Informe seu usuário");
+        }
+        //Carga Horária.
+        if (txtSenha.getText().isEmpty()) {
+            txtSenha.pseudoClassStateChanged(errorClass, true);
+            txtSenha.setPromptText(msg);
+            erro = true;
+        } else {
+            txtSenha.pseudoClassStateChanged(errorClass, false);
+            txtSenha.setPromptText("Informe sua senha");
+        }
+
+        if (erro) {
+            return false;
+        } else {
+            return true;
+        }
 
     }
 
