@@ -72,7 +72,6 @@ public class FXMLTelaPrincipalController implements Initializable {
     @FXML
     private void abrirSobre(ActionEvent event) {
         new Utils.Mensagem()
-                .addTituloJanela("Sobre")
                 .addMsgCabecalho("JADATECH - Gereciamento de Alunos - 2020")
                 .addMsgConteudo("Sistemas de Informação - 7ºp \n"
                         + "Lucas Cardoso \n"

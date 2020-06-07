@@ -16,30 +16,28 @@ import javafx.stage.Stage;
 
 public class FXMLCadastroAlunoInserirController implements Initializable {
     
-
     @FXML
     private TextField txtCPF;
-
+    
     @FXML
     private TextField txtEndereco;
-
+    
     @FXML
     private TextField txtTelefone;
-
+    
     @FXML
     private TextField txtEmail;
-
+    
     @FXML
     private TextField txtDataNascimento;
-
+    
     @FXML
     private Button btnSalvar;
-
+    
     @FXML
     private Button btnCancelar;
-    
+
     //labels para validacao
-    
     @FXML
     private Label obgNome;
     @FXML
@@ -60,32 +58,29 @@ public class FXMLCadastroAlunoInserirController implements Initializable {
         
         Stage stage = (Stage) btnCancelar.getScene().getWindow();
         stage.close();
-
+        
     }
 
     // metodo para salvar um novo usuario no bd.
     @FXML
     private void salvar(ActionEvent event) {
         
-
+        Aluno aluno = new Aluno();        
         
-            Aluno aluno = new Aluno();  
+        String nome = txtNome.getText();
+        String cpf = txtCPF.getText();
+        String endereco = txtEndereco.getText();
+        String telefone = txtTelefone.getText();
+        String email = txtEmail.getText();        
+        
+        if (nome.length() > 0) {
             
-            String nome = txtNome.getText();
-            String cpf=txtCPF.getText();
-            String endereco =txtEndereco.getText();
-            String telefone =txtTelefone.getText();
-            String email =txtEmail.getText(); 
-            
-            
-       if (nome.length() > 0) {
-               
             obgNome.setVisible(false);
         } else {
             obgNome.setVisible(true);
-             
+            
         }
- 
+        
         if (cpf.length() > 0) {
             obgCpf.setVisible(false);
         } else {
@@ -97,73 +92,58 @@ public class FXMLCadastroAlunoInserirController implements Initializable {
             obgend.setVisible(true);
         }
         
-        if(telefone.length() > 0){
-        obgTelefone.setVisible(false);
-        }else {
-        obgTelefone.setVisible(true);
+        if (telefone.length() > 0) {
+            obgTelefone.setVisible(false);
+        } else {
+            obgTelefone.setVisible(true);
         }
-        if(email.length() > 0){
-        obgEmail.setVisible(false);
-        }else {
-        obgEmail.setVisible(true);
+        if (email.length() > 0) {
+            obgEmail.setVisible(false);
+        } else {
+            obgEmail.setVisible(true);
         }
         
-                if (
-                        (nome.length() > 0)
-                &&       (cpf.length()> 0)
-                &&  (endereco.length() > 0)
-                &&  (telefone.length() > 0)
-                &&     (email.length() > 0)  ) {
+        if ((nome.length() > 0)
+                && (cpf.length() > 0)
+                && (endereco.length() > 0)
+                && (telefone.length() > 0)
+                && (email.length() > 0)) {
             
-              try {
-                  
-             aluno.setNomeAluno(nome);
-             aluno.setCpfAluno(cpf);
-             aluno.setEmailAluno(email);
-             aluno.setEnderecoAluno(endereco);
-             aluno.setTelefoneAluno(telefone);
+            try {
+                
+                aluno.setNomeAluno(nome);
+                aluno.setCpfAluno(cpf);
+                aluno.setEmailAluno(email);
+                aluno.setEnderecoAluno(endereco);
+                aluno.setTelefoneAluno(telefone);
 
-          // 
-        
-            AlunoDAO alunoDao = new AlunoDAO();
+                // 
+                AlunoDAO alunoDao = new AlunoDAO();
 
-            // verifica se o registro foi inserido para que asim feche a tela.
-            if (alunoDao.inserir(aluno)) {
-               UtilsAntigo.exibeMensagem("Parabens", null, "Cadastrado com sucesso", Alert.AlertType.INFORMATION);
-                Stage stage = (Stage) btnSalvar.getScene().getWindow();
-                stage.close();
+                // verifica se o registro foi inserido para que asim feche a tela.
+                if (alunoDao.inserir(aluno)) {
+                    UtilsAntigo.exibeMensagem("Parabens", null, "Cadastrado com sucesso", Alert.AlertType.INFORMATION);
+                    Stage stage = (Stage) btnSalvar.getScene().getWindow();
+                    stage.close();
+                }
+            } catch (Exception e) {
+                UtilsAntigo.exibeMensagem("Atenção", "Ocorreu um erro ao tentar inserir registro.", e.getMessage(), Alert.AlertType.INFORMATION);
             }
-        } catch (Exception e) {
-            UtilsAntigo.exibeMensagem("Atenção", "Ocorreu um erro ao tentar inserir registro.", e.getMessage(), Alert.AlertType.INFORMATION);
-        }
-              
-              
             
         } else {
             UtilsAntigo.exibeMensagem("Atenção", null, "Cadastro inválido , preencha os campos obrigatório", Alert.AlertType.INFORMATION);
-}
-            
-            
-
-
+        }
+        
     }
-
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        
     }
-    
-    
-   
 
     //demais metodos
-private void salvar(java.awt.event.ActionEvent evt) {                                                 
+    private void salvar(java.awt.event.ActionEvent evt) {        
+        
+    }
     
-  
-    
-}
-
-
-   
-
 }

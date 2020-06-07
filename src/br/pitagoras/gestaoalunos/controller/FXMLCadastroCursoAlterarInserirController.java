@@ -63,7 +63,6 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
             CursoDAO cursoDao = new CursoDAO();
             if (cursoDao.deletar(cursoSelecionado)) {
                 new Utils.Mensagem()
-                        .addTituloJanela("Atenção")
                         .addMsgConteudo("Registro excluído com sucesso.")
                         .addTipoMsg(Alert.AlertType.INFORMATION)
                         .exibir();
@@ -76,7 +75,6 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
             }
         } catch (Exception e) {
             new Utils.Mensagem()
-                    .addTituloJanela("Atenção")
                     .addMsgCabecalho("Ocorreu um erro ao tentar excluir o registro.")
                     .addMsgConteudo(e.getMessage())
                     .addTipoMsg(Alert.AlertType.INFORMATION)
@@ -105,7 +103,6 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
 
                 if (cursoDao.alterar(cursoSelecionado)) {
                     new Utils.Mensagem()
-                            .addTituloJanela("Atenção")
                             .addMsgConteudo("Registro alterado com sucesso.")
                             .addTipoMsg(Alert.AlertType.INFORMATION)
                             .exibir();
@@ -119,7 +116,6 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
                 }
             } catch (Exception e) {
                 new Utils.Mensagem()
-                        .addTituloJanela("Atenção")
                         .addMsgCabecalho("Ocorreu um erro ao tentar alterar o registro.")
                         .addMsgConteudo(e.getMessage())
                         .addTipoMsg(Alert.AlertType.INFORMATION)
@@ -136,7 +132,6 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
 
                 if (cursoDao.inserir(curso)) {
                     new Utils.Mensagem()
-                            .addTituloJanela("Atenção")
                             .addMsgConteudo("Registro inserido com sucesso.")
                             .addTipoMsg(Alert.AlertType.INFORMATION)
                             .exibir();
@@ -150,7 +145,6 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
                 }
             } catch (Exception e) {
                 new Utils.Mensagem()
-                        .addTituloJanela("Atenção")
                         .addMsgCabecalho("Ocorreu um erro ao tentar inserir o registro.")
                         .addMsgConteudo(e.getMessage())
                         .addTipoMsg(Alert.AlertType.INFORMATION)

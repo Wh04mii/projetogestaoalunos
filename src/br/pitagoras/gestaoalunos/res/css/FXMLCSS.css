@@ -17,6 +17,7 @@
 
 .button:hover {
     -fx-background-color: #25679c;
+    
 }
 
 .button:pressed {
@@ -68,6 +69,10 @@
 }
 
 .menu-bar .label{
+    -fx-text-fill: #fff;
+}
+
+.menu-item .label{
     -fx-text-fill: #fff;
 }
 

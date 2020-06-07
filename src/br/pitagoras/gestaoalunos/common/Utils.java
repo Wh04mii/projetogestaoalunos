@@ -1,12 +1,22 @@
 package br.pitagoras.gestaoalunos.common;
 
 import java.io.IOException;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -104,7 +114,6 @@ public class Utils {
             // Verifica se o caminho do FXML é válido.
             if (this.loader.getLocation() == null) {
                 new Mensagem()
-                        .addTituloJanela("Erro")
                         .addMsgCabecalho("Ocorreu um erro ao abrir a janela.")
                         .addMsgConteudo("O caminho FXML não foi encontrado.")
                         .addTipoMsg(Alert.AlertType.ERROR)
@@ -115,7 +124,6 @@ public class Utils {
             // Verifica se foi especificado o tipo de tela a ser retornado.
             if (!telaExterna && !telaInterna) {
                 new Mensagem()
-                        .addTituloJanela("Erro")
                         .addMsgCabecalho("Ocorreu um erro ao abrir a janela.")
                         .addMsgConteudo("Tipo de tela não definida.")
                         .addTipoMsg(Alert.AlertType.ERROR)
@@ -150,7 +158,6 @@ public class Utils {
                 anchorPane.getChildren().addAll(pane);
             } catch (IOException ex) {
                 new Mensagem()
-                        .addTituloJanela("Erro")
                         .addMsgCabecalho("Ocorreu um erro ao abrir a janela.")
                         .addMsgConteudo(UtilsAntigo.class.getName() + "\n" + ex.toString())
                         .addTipoMsg(Alert.AlertType.ERROR)
@@ -175,7 +182,6 @@ public class Utils {
 
             } catch (IOException ex) {
                 new Mensagem()
-                        .addTituloJanela("Erro")
                         .addMsgCabecalho("Ocorreu um erro ao abrir a janela.")
                         .addMsgConteudo(UtilsAntigo.class.getName() + "\n" + ex.toString())
                         .addTipoMsg(Alert.AlertType.ERROR)
@@ -191,6 +197,8 @@ public class Utils {
         private String msgCabecalho;
         private String msgConteudo;
         private String tipoAlerta;
+        private boolean mostrarIcone;
+        private double initialX, initialY;
 
         public Mensagem() {
         }
@@ -200,11 +208,10 @@ public class Utils {
             return this;
         }
 
-        public Mensagem addTituloJanela(String tituloJanela) {
+        /*   public Mensagem addTituloJanela(String tituloJanela) {
             this.tituloJanela = tituloJanela;
             return this;
-        }
-
+        } */
         public Mensagem addMsgCabecalho(String msgCabecalho) {
             this.msgCabecalho = msgCabecalho;
             return this;
@@ -215,15 +222,83 @@ public class Utils {
             return this;
         }
 
+        public Mensagem mostrarIcone(boolean resposta) {
+            this.mostrarIcone = resposta;
+            return this;
+        }
+
         // Retornar o alert.
         public Alert exibir() {
+            // Novo alert.
             Alert alert = new Alert(Alert.AlertType.valueOf(tipoAlerta));
-            alert.setTitle(tituloJanela);
+            // Titulo.
+            //alert.setTitle(tituloJanela);
+            // Cabeçalho.
             alert.setHeaderText(msgCabecalho);
+            // Conteudo.
             alert.setContentText(msgConteudo);
+            // Inicio sem decoração de janela.
+            alert.initStyle(StageStyle.TRANSPARENT);
+            // Limpa a cor de background.
+            alert.getDialogPane().getScene().setFill(Color.TRANSPARENT);
+
+            // Verifica se vai exibir icone.
+            if (!mostrarIcone) {
+                alert.setGraphic(null);
+            }
+
+            if (this.tipoAlerta.equals("CONFIRMATION")) {
+                // Limpar botões.
+                alert.getButtonTypes().clear();
+                // Adicionar opções de sim/não.
+                alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
+            }
+
+            // Metodo para permitir mover a tela do alert sem as decorações de janela.
+            moverAlert(alert.getDialogPane());
+            // Metodo para aplicar estilo css.
+            aplicarCssAlert(alert.getDialogPane());
+            // Metodo para centralizar os botões.
+            centralizarBotoes(alert.getDialogPane());
+
             alert.showAndWait();
 
             return alert;
+        }
+
+        // Metodo para centralizar os botões do alert.
+        private void centralizarBotoes(DialogPane dialogPane) {
+            // Fonte: https://stackoverflow.com/questions/36009764/how-to-align-ok-button-of-a-dialog-pane-in-javafx
+
+            Region spacer = new Region();
+            ButtonBar.setButtonData(spacer, ButtonBar.ButtonData.BIG_GAP);
+            HBox.setHgrow(spacer, Priority.ALWAYS);
+            dialogPane.applyCss();
+            HBox hboxDialogPane = (HBox) dialogPane.lookup(".container");
+            hboxDialogPane.getChildren().add(spacer);
+        }
+
+        // Metodo para permitir mover a tela do alert sem as decorações de janela.
+        private void moverAlert(DialogPane dialogPane) {
+            // Fonte: https://stackoverflow.com/questions/11780115/moving-an-undecorated-stage-in-javafx-2
+            dialogPane.setOnMousePressed((MouseEvent me) -> {
+                if (me.getButton() != MouseButton.MIDDLE) {
+                    initialX = me.getSceneX();
+                    initialY = me.getSceneY();
+                }
+            });
+
+            dialogPane.setOnMouseDragged((MouseEvent event) -> {
+                dialogPane.getScene().getWindow().setX(event.getScreenX() - initialX);
+                dialogPane.getScene().getWindow().setY(event.getScreenY() - initialY);
+            });
+        }
+
+        private void aplicarCssAlert(DialogPane dialogPane) {
+            dialogPane.getStylesheets()
+                    .add(getClass()
+                            .getResource("/br/pitagoras/gestaoalunos/res/css/Dialogs.css")
+                            .toExternalForm());
         }
     }
 
