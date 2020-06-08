@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="AnchorPane" fx:id="anchorPaneGeral" prefHeight="500.0" prefWidth="900.0" stylesheets="@../res/css/FXMLCSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.pitagoras.gestaoalunos.controller.FXMLCadastroCursoController">
+<AnchorPane id="AnchorPane" fx:id="anchorPaneGeral" prefHeight="500.0" prefWidth="900.0" stylesheets="@../res/css/Style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.pitagoras.gestaoalunos.controller.FXMLCadastroCursoController">
    <children>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
    <top>

@@ -32,16 +32,52 @@ public class FXMLLoginController implements Initializable {
     private Button btnFechar;
 
     @FXML
-    private void sair(ActionEvent event) {
+    private void handleBtnSair(ActionEvent event) {
         System.exit(0);
+
     }
 
     @FXML
-    private void logar(ActionEvent event) {       
-        if (!validarCampos()) {
-            return;
+    private void handleBtnEntrar(ActionEvent event) {
+        if (validarCampos()) {
+            fazerLogin();
         }
-        
+
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+    }
+
+    private boolean validarCampos() {
+        /* Fonte https://en.it1352.com/article/a45a2908823a47fcaaf9ff3cbb7fdffb.html */
+        final PseudoClass errorClass = PseudoClass.getPseudoClass("validacao-erro");
+        boolean continua = true;
+        final String msg = "Campo obrigatório";
+
+        // Usuário.
+        if (txtUsuario.getText().isEmpty()) {
+            txtUsuario.pseudoClassStateChanged(errorClass, true);
+            txtUsuario.setPromptText(msg);
+            continua = false;
+        } else {
+            txtUsuario.pseudoClassStateChanged(errorClass, false);
+            txtUsuario.setPromptText("Informe seu usuário");
+        }
+        // Senha.
+        if (txtSenha.getText().isEmpty()) {
+            txtSenha.pseudoClassStateChanged(errorClass, true);
+            txtSenha.setPromptText(msg);
+            continua = false;
+        } else {
+            txtSenha.pseudoClassStateChanged(errorClass, false);
+            txtSenha.setPromptText("Informe sua senha");
+        }
+        return continua;
+
+    }
+
+    private void fazerLogin() {
         String usuario = txtUsuario.getText();
         String senha = txtSenha.getText();
         ProfessorDAO professorDao = new ProfessorDAO();
@@ -54,7 +90,7 @@ public class FXMLLoginController implements Initializable {
                     .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLTelaPrincipal.fxml")
                     .ehTelaExterna(false)
                     .addTituloTelaExter("Sistema de Gestão de Alunos")
-                    .redimensionarTelaExter(false)
+                    .redimensionarTelaExter(true)
                     .exibirTelaCheiaExter()
                     .exibirEsperarTelaExter()
                     .construir();
@@ -70,45 +106,6 @@ public class FXMLLoginController implements Initializable {
             lblAlerta.setText(msg);
             lblAlerta.setVisible(true);
         }
-
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
-
-    private boolean validarCampos() {
-        /* Fonte https://en.it1352.com/article/a45a2908823a47fcaaf9ff3cbb7fdffb.html */
-        final PseudoClass errorClass = PseudoClass.getPseudoClass("validacao-erro");
-        boolean erro = false;
-        String msg = "Campo obrigatório";
-
-        // Descrição.
-        if (txtUsuario.getText().isEmpty()) {
-            txtUsuario.pseudoClassStateChanged(errorClass, true);
-            txtUsuario.setPromptText(msg);
-            erro = true;
-        } else {
-            txtUsuario.pseudoClassStateChanged(errorClass, false);
-            txtUsuario.setPromptText("Informe seu usuário");
-        }
-        //Carga Horária.
-        if (txtSenha.getText().isEmpty()) {
-            txtSenha.pseudoClassStateChanged(errorClass, true);
-            txtSenha.setPromptText(msg);
-            erro = true;
-        } else {
-            txtSenha.pseudoClassStateChanged(errorClass, false);
-            txtSenha.setPromptText("Informe sua senha");
-        }
-
-        if (erro) {
-            return false;
-        } else {
-            return true;
-        }
-
     }
 
 }

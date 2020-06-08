@@ -1,13 +1,14 @@
 package br.pitagoras.gestaoalunos.common;
 
 import java.io.IOException;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.input.MouseButton;
@@ -38,7 +39,8 @@ public class Utils {
     // Classe estática implementando o pattern Builder que vai retornar a tela.
     public static class Tela {
 
-        /*  Nomenclatura
+        /*  
+            Nomenclatura
             TelaInter = tela interna, abre sobre o anchorPane;
             TelaExter = janela externa;
          */
@@ -144,9 +146,10 @@ public class Utils {
         // Retorna o controller para acessar os métodos do FXML acessado.
         private Object controller() {
             return this.loader.getController();
+            
         }
 
-        // Método responsável por construir e retornar a tela interna.
+        // Metódo responsável por construir e retornar a tela interna.
         private void retornaTelaInter() {
             try {
                 AnchorPane pane = loader.load();
@@ -159,46 +162,45 @@ public class Utils {
             } catch (IOException ex) {
                 new Mensagem()
                         .addMsgCabecalho("Ocorreu um erro ao abrir a janela.")
-                        .addMsgConteudo(UtilsAntigo.class.getName() + "\n" + ex.toString())
+                        .addMsgConteudo(Utils.class.getName() + "\n" + ex.toString())
                         .addTipoMsg(Alert.AlertType.ERROR)
                         .exibir();
             }
+            
         }
 
-        // Método resposável por construir e retornar a tela externa.
+        // Metódo resposável por construir e retornar a tela externa.
         private void retornaTelaExter() {
             try {
                 Parent parent = (Parent) loader.load();
                 Scene scene = new Scene(parent);
                 stage.setScene(scene);
                 stage.initModality(Modality.APPLICATION_MODAL);
-
                 // Verifica se o stage vai exibir e aguardar o usuário.
                 if (!exibirEsperarTelaExter) {
                     stage.showAndWait();
                 } else {
                     stage.show();
                 }
-
             } catch (IOException ex) {
                 new Mensagem()
                         .addMsgCabecalho("Ocorreu um erro ao abrir a janela.")
-                        .addMsgConteudo(UtilsAntigo.class.getName() + "\n" + ex.toString())
+                        .addMsgConteudo(Utils.class.getName() + "\n" + ex.toString())
                         .addTipoMsg(Alert.AlertType.ERROR)
                         .exibir();
             }
+            
         }
     }
 
-    // Classe estática implementando o pattern Builder que vai retornar mensagem.
+    // Classe estática implementando o pattern Builder que vai retornar um Alert.
     public static class Mensagem {
-
-        private String tituloJanela;
+        //   private String tituloJanela;
         private String msgCabecalho;
         private String msgConteudo;
         private String tipoAlerta;
-        private boolean mostrarIcone;
-        private double initialX, initialY;
+        private double initialX;
+        private double initialY;
 
         public Mensagem() {
         }
@@ -222,43 +224,36 @@ public class Utils {
             return this;
         }
 
-        public Mensagem mostrarIcone(boolean resposta) {
-            this.mostrarIcone = resposta;
-            return this;
-        }
-
         // Retornar o alert.
         public Alert exibir() {
-            // Novo alert.
+            // Novo Alert.
             Alert alert = new Alert(Alert.AlertType.valueOf(tipoAlerta));
-            // Titulo.
+            // Título. 
             //alert.setTitle(tituloJanela);
             // Cabeçalho.
             alert.setHeaderText(msgCabecalho);
-            // Conteudo.
+            // Conteúdo.
             alert.setContentText(msgConteudo);
-            // Inicio sem decoração de janela.
+            // Início sem decoração de janela.
             alert.initStyle(StageStyle.TRANSPARENT);
             // Limpa a cor de background.
             alert.getDialogPane().getScene().setFill(Color.TRANSPARENT);
+            // Limpa o ícone.
+            alert.setGraphic(null);
 
-            // Verifica se vai exibir icone.
-            if (!mostrarIcone) {
-                alert.setGraphic(null);
-            }
-
+            // Verifica o tipo de alerta que vai ser exibido.
             if (this.tipoAlerta.equals("CONFIRMATION")) {
-                // Limpar botões.
+                // Limpa os botões existentes.                
                 alert.getButtonTypes().clear();
-                // Adicionar opções de sim/não.
+                // Adicionar botões de sim/não.
                 alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
             }
 
-            // Metodo para permitir mover a tela do alert sem as decorações de janela.
+            // Metódo para permitir mover a tela quando o Alert não tem as decorações de janela.
             moverAlert(alert.getDialogPane());
-            // Metodo para aplicar estilo css.
+            // Metódo para aplicar estilo css.
             aplicarCssAlert(alert.getDialogPane());
-            // Metodo para centralizar os botões.
+            // Metódo para centralizar os botões da ButoonBar do Alert.
             centralizarBotoes(alert.getDialogPane());
 
             alert.showAndWait();
@@ -266,19 +261,7 @@ public class Utils {
             return alert;
         }
 
-        // Metodo para centralizar os botões do alert.
-        private void centralizarBotoes(DialogPane dialogPane) {
-            // Fonte: https://stackoverflow.com/questions/36009764/how-to-align-ok-button-of-a-dialog-pane-in-javafx
-
-            Region spacer = new Region();
-            ButtonBar.setButtonData(spacer, ButtonBar.ButtonData.BIG_GAP);
-            HBox.setHgrow(spacer, Priority.ALWAYS);
-            dialogPane.applyCss();
-            HBox hboxDialogPane = (HBox) dialogPane.lookup(".container");
-            hboxDialogPane.getChildren().add(spacer);
-        }
-
-        // Metodo para permitir mover a tela do alert sem as decorações de janela.
+        // Metódo para permitir mover a tela quando o Alert não tem as decorações de janela.
         private void moverAlert(DialogPane dialogPane) {
             // Fonte: https://stackoverflow.com/questions/11780115/moving-an-undecorated-stage-in-javafx-2
             dialogPane.setOnMousePressed((MouseEvent me) -> {
@@ -292,13 +275,28 @@ public class Utils {
                 dialogPane.getScene().getWindow().setX(event.getScreenX() - initialX);
                 dialogPane.getScene().getWindow().setY(event.getScreenY() - initialY);
             });
+
         }
 
+        // Metódo para aplicar estilo css.
         private void aplicarCssAlert(DialogPane dialogPane) {
             dialogPane.getStylesheets()
                     .add(getClass()
-                            .getResource("/br/pitagoras/gestaoalunos/res/css/Dialogs.css")
+                            .getResource("/br/pitagoras/gestaoalunos/res/css/Style.css")
                             .toExternalForm());
+
+        }
+
+        // Metódo para centralizar os botões da ButoonBar do Alert.
+        private void centralizarBotoes(DialogPane dialogPane) {
+            // Fonte: https://stackoverflow.com/questions/36009764/how-to-align-ok-button-of-a-dialog-pane-in-javafx
+            Region spacer = new Region();
+            ButtonBar.setButtonData(spacer, ButtonBar.ButtonData.BIG_GAP);
+            HBox.setHgrow(spacer, Priority.ALWAYS);
+            dialogPane.applyCss();
+            HBox hboxDialogPane = (HBox) dialogPane.lookup(".container");
+            hboxDialogPane.getChildren().add(spacer);
+
         }
     }
 

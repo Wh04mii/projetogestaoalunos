@@ -1,15 +1,10 @@
 package br.pitagoras.gestaoalunos.controller;
 
 import br.pitagoras.gestaoalunos.common.Utils;
-import br.pitagoras.gestaoalunos.dao.CursoDAO;
 import br.pitagoras.gestaoalunos.dao.ProfessorDAO;
-import br.pitagoras.gestaoalunos.model.Curso;
 import br.pitagoras.gestaoalunos.model.Professor;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,12 +12,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
-public class FXMLCadastroCursoAlterarInserirController implements Initializable {
+public class FXMLCadastroProfessorAlterarInserirController implements Initializable {
 
     @FXML
     private AnchorPane anchorPaneGeral;
@@ -31,36 +26,44 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
     private AnchorPane anchorPaneConteudo;
 
     @FXML
-    private Button btnSalvar;
-
-    @FXML
-    private Button btnExcluir;
-
-    @FXML
-    private Button btnCancelar;
-
-    @FXML
     private Label lblCodigoCadastro;
 
     @FXML
     private TextField txtId;
 
     @FXML
-    private TextField txtDescricao;
+    private TextField txtNome;
 
     @FXML
-    private TextField txtCargaHoraria;
+    private TextField txtCPF;
 
     @FXML
-    private ComboBox<Professor> comboBoxProfessor;
+    private TextField txtEndereco;
 
-    private Curso cursoSelecionado;
+    @FXML
+    private TextField txtRA;
 
-    private Professor professor;
+    @FXML
+    private TextField txtUsuario;
+
+    @FXML
+    private PasswordField txtSenha;
+
+    @FXML
+    private Button btnExcluir;
+
+    @FXML
+    private Button btnSalvar;
+
+    @FXML
+    private Button btnCancelar;
+
+    private Professor professorSelecionado;
 
     @FXML
     private void handleBtnExcluir(ActionEvent event) {
         excluir();
+
     }
 
     @FXML
@@ -74,7 +77,7 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
     @FXML
     private void handleBtnCancelar(ActionEvent event) {
         new Utils.Tela()
-                .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroCurso.fxml")
+                .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroProfessor.fxml")
                 .ehTelaInterna(true)
                 .addAnchorPaneTelaInter(anchorPaneGeral)
                 .construir();
@@ -83,8 +86,6 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        preecherComboBoxProfessor(null);
-
     }
 
     public void inicializarCampos(int id) {
@@ -92,56 +93,49 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
         btnExcluir.setVisible(true);
         txtId.setVisible(true);
         lblCodigoCadastro.setVisible(true);
+        txtUsuario.setDisable(true);
+        txtUsuario.setFocusTraversable(false);
 
         // Inicializar campos.
-        cursoSelecionado = new CursoDAO().pesquisar(id);
-        txtId.setText(String.valueOf(cursoSelecionado.getIdCurso()));
-        txtDescricao.setText(cursoSelecionado.getDescCurso());
-        txtCargaHoraria.setText(String.valueOf(cursoSelecionado.getCargaHoraria()));
-        preecherComboBoxProfessor(cursoSelecionado.getFkIdProfessor());
-
-    }
-
-    // Metódo para buscar os cadastros de professores e inserir no combobox.
-    private void preecherComboBoxProfessor(Professor professor) {
-        ObservableList<Professor> observableListProfessor;
-        List<Professor> listProfessor = new ProfessorDAO().pesquisar();
-
-        observableListProfessor = FXCollections.observableArrayList(listProfessor);
-        comboBoxProfessor.getItems().clear();
-        // Primeira linha vazia.
-        comboBoxProfessor.getItems().add(null);
-        comboBoxProfessor.getItems().addAll(observableListProfessor);
-
-        // Se no banco já tiver vinculado ao professor, seleciona o cadastro do mesmo.
-        if (professor != null) {
-            comboBoxProfessor.getSelectionModel().select(professor);
-        }
+        professorSelecionado = new ProfessorDAO().pesquisar(id);
+        txtId.setText(String.valueOf(professorSelecionado.getIdProfessor()));
+        txtNome.setText(professorSelecionado.getNomeProfessor());
+        txtCPF.setText(professorSelecionado.getCpfProfessor());
+        txtEndereco.setText(professorSelecionado.getEnderecoProfessor());
+        txtRA.setText(String.valueOf(professorSelecionado.getRAProfessor()));
+        txtUsuario.setText(professorSelecionado.getLoginProfessor());
+        txtSenha.setText(professorSelecionado.getSenhaProfessor());
 
     }
 
     private void inserirAlterar() {
-        String descricao = txtDescricao.getText();
-        Double cargaHoraria = Double.parseDouble(txtCargaHoraria.getText());
-        Professor professorFk = comboBoxProfessor.getSelectionModel().getSelectedItem();
+        String nome = txtNome.getText();
+        String cpf = txtCPF.getText();
+        String endereco = txtEndereco.getText();
+        Integer ra = Integer.parseInt(txtRA.getText());
+        String usuario = txtUsuario.getText();
+        String senha = txtSenha.getText();
 
-        CursoDAO cursoDao = new CursoDAO();
+        ProfessorDAO professorDao = new ProfessorDAO();
 
         // Atualizar cadastro.
-        if (cursoSelecionado != null) {
+        if (professorSelecionado != null) {
             try {
-                cursoSelecionado.setDescCurso(descricao);
-                cursoSelecionado.setCargaHoraria(cargaHoraria);
-                cursoSelecionado.setFkIdProfessor(professorFk);
+                professorSelecionado.setNomeProfessor(nome);
+                professorSelecionado.setCpfProfessor(cpf);
+                professorSelecionado.setEnderecoProfessor(endereco);
+                professorSelecionado.setRAProfessor(ra);
+                professorSelecionado.setLoginProfessor(usuario);
+                professorSelecionado.setSenhaProfessor(senha);
 
-                if (cursoDao.alterar(cursoSelecionado)) {
+                if (professorDao.alterar(professorSelecionado)) {
                     new Utils.Mensagem()
                             .addMsgConteudo("Registro alterado com sucesso.")
                             .addTipoMsg(Alert.AlertType.INFORMATION)
                             .exibir();
 
                     new Utils.Tela()
-                            .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroCurso.fxml")
+                            .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroProfessor.fxml")
                             .ehTelaInterna(true)
                             .addAnchorPaneTelaInter(anchorPaneGeral)
                             .construir();
@@ -158,19 +152,22 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
         } // Inserir cadastro.
         else {
             try {
-                Curso curso = new Curso();
-                curso.setDescCurso(descricao);
-                curso.setCargaHoraria(cargaHoraria);
-                curso.setFkIdProfessor(professorFk);
+                Professor professor = new Professor();
+                professor.setNomeProfessor(nome);
+                professor.setCpfProfessor(cpf);
+                professor.setEnderecoProfessor(endereco);
+                professor.setRAProfessor(ra);
+                professor.setLoginProfessor(usuario);
+                professor.setSenhaProfessor(senha);
 
-                if (cursoDao.inserir(curso)) {
+                if (professorDao.inserir(professor)) {
                     new Utils.Mensagem()
                             .addMsgConteudo("Registro inserido com sucesso.")
                             .addTipoMsg(Alert.AlertType.INFORMATION)
                             .exibir();
 
                     new Utils.Tela()
-                            .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroCurso.fxml")
+                            .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroProfessor.fxml")
                             .ehTelaInterna(true)
                             .addAnchorPaneTelaInter(anchorPaneGeral)
                             .construir();
@@ -182,28 +179,28 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
                         .addMsgConteudo(e.getMessage())
                         .addTipoMsg(Alert.AlertType.INFORMATION)
                         .exibir();
-
             }
         }
+
     }
 
     private void excluir() {
         ButtonType resposta = new Utils.Mensagem()
                 .addTipoMsg(Alert.AlertType.CONFIRMATION)
                 .addMsgCabecalho("Deseja excluir o registro?")
-                .addMsgConteudo(cursoSelecionado.getDescCurso())
+                .addMsgConteudo(professorSelecionado.getNomeProfessor())
                 .exibir().getResult();
         if (resposta == ButtonType.YES) {
             try {
-                CursoDAO cursoDao = new CursoDAO();
-                if (cursoDao.deletar(cursoSelecionado)) {
+                ProfessorDAO professorDao = new ProfessorDAO();
+                if (professorDao.deletar(professorSelecionado)) {
                     new Utils.Mensagem()
                             .addMsgConteudo("Registro excluído com sucesso.")
                             .addTipoMsg(Alert.AlertType.INFORMATION)
                             .exibir();
 
                     new Utils.Tela()
-                            .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroCurso.fxml")
+                            .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroProfessor.fxml")
                             .ehTelaInterna(true)
                             .addAnchorPaneTelaInter(anchorPaneGeral)
                             .construir();
@@ -226,25 +223,51 @@ public class FXMLCadastroCursoAlterarInserirController implements Initializable 
         boolean continua = true;
         final String msg = "Campo obrigatório";
 
-        // Descrição.
-        if (txtDescricao.getText().isEmpty()) {
-            txtDescricao.pseudoClassStateChanged(errorClass, true);
-            txtDescricao.setPromptText(msg);
+        // Nome
+        if (txtNome.getText().isEmpty()) {
+            txtNome.pseudoClassStateChanged(errorClass, true);
+            txtNome.setPromptText(msg);
             continua = false;
         } else {
-            txtDescricao.pseudoClassStateChanged(errorClass, false);
-            txtDescricao.setPromptText(null);
+            txtNome.pseudoClassStateChanged(errorClass, false);
+            txtNome.setPromptText(null);
         }
-        //Carga Horária.
-        if (txtCargaHoraria.getText().isEmpty()) {
-            txtCargaHoraria.pseudoClassStateChanged(errorClass, true);
-            txtCargaHoraria.setPromptText(msg);
+        // Cpf
+        if (txtCPF.getText().isEmpty()) {
+            txtCPF.pseudoClassStateChanged(errorClass, true);
+            txtCPF.setPromptText(msg);
             continua = false;
         } else {
-            txtCargaHoraria.pseudoClassStateChanged(errorClass, false);
-            txtCargaHoraria.setPromptText(null);
+            txtCPF.pseudoClassStateChanged(errorClass, false);
+            txtCPF.setPromptText(null);
         }
-
+        // Ra
+        if (txtRA.getText().isEmpty()) {
+            txtRA.pseudoClassStateChanged(errorClass, true);
+            txtRA.setPromptText(msg);
+            continua = false;
+        } else {
+            txtRA.pseudoClassStateChanged(errorClass, false);
+            txtRA.setPromptText(null);
+        }
+        // Usuario
+        if (txtUsuario.getText().isEmpty()) {
+            txtUsuario.pseudoClassStateChanged(errorClass, true);
+            txtUsuario.setPromptText(msg);
+            continua = false;
+        } else {
+            txtUsuario.pseudoClassStateChanged(errorClass, false);
+            txtUsuario.setPromptText(null);
+        }
+        // Senha
+        if (txtSenha.getText().isEmpty()) {
+            txtSenha.pseudoClassStateChanged(errorClass, true);
+            txtSenha.setPromptText(msg);
+            continua = false;
+        } else {
+            txtSenha.pseudoClassStateChanged(errorClass, false);
+            txtSenha.setPromptText(null);
+        }
         return continua;
 
     }

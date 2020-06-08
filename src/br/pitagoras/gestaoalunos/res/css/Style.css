@@ -17,7 +17,7 @@
 
 .button:hover {
     -fx-background-color: #25679c;
-    
+
 }
 
 .button:pressed {
@@ -99,3 +99,65 @@
     -fx-border-color: transparent;
     -fx-border-style: none;
 }
+
+/**************************
+ *                        *
+ * Dialog                 *
+ *                        *
+ *************************/
+
+/* Alert geral */
+.dialog-pane {    
+    -fx-background-color: #fff; 
+    -fx-background-radius: 30px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 25, 0.3, 0.0, 0.0);
+    -fx-border-insets: 20px;
+    -fx-background-insets: 20px;
+    -fx-padding: 40px;
+}
+
+/* Cabeçalho */
+.dialog-pane:header .header-panel {
+    -fx-padding: 0 0 10px 0;
+    -fx-background-color: transparent;
+    -fx-border-color : #164755; 
+    -fx-border-width : 0 0 2px 0;
+}
+
+/* Fonte cabeaçalho */
+.dialog-pane:header .header-panel .label {
+    -fx-font-size: 16px;
+    -fx-wrap-text: true;
+    -fx-alignment: center;
+}
+
+/* Conteúdo */
+.dialog-pane .content.label {
+    -fx-alignment: center;
+    -fx-font-size: 14px;
+    -fx-padding: 20px 0 20px 0;
+}
+
+/* Botões */
+.dialog-pane .button-bar .container {
+    -fx-padding: 0;
+}
+
+/* Botões */
+.dialog-pane .button-bar .container .button {
+    -fx-background-color: #164755;
+    -fx-text-fill: #fff;
+    -fx-pref-height: 30px;
+    -fx-pref-width: 100px;    
+}
+
+/* Botões */
+.dialog-pane .button-bar .container .button:hover {
+    -fx-background-color: #25679c;
+}
+
+/* Botões */
+.dialog-pane .button-bar .container .button:pressed {
+    -fx-background-color: #2576b1;
+}
+

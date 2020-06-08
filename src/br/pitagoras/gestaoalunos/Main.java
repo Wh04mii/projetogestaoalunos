@@ -9,18 +9,18 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        
+
         new Utils.Tela()
-                .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLCadastroCurso.fxml")
+                .addCaminhoFXML("/br/pitagoras/gestaoalunos/view/FXMLLogin.fxml")
                 .ehTelaExterna(true)
                 .redimensionarTelaExter(false)
-           //     .estiloTelaExter(StageStyle.UNDECORATED)
+                .estiloTelaExter(StageStyle.UNDECORATED)
                 .centralizarTelaExter()
-                .construir();       
-       
+                .construir();
+
     }
 
-    public static void main(String[] args) {        
+    public static void main(String[] args) {
         launch(args);
     }
 }

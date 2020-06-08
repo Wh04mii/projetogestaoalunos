@@ -84,7 +84,6 @@ public class FXMLCadastroCursoController implements Initializable {
 
     }
 
-    //
     @FXML
     private void handleCtxtExcluir(ActionEvent event) {
         if (tblViewCurso.getSelectionModel().getSelectedItem() == null) {
@@ -117,6 +116,7 @@ public class FXMLCadastroCursoController implements Initializable {
                 .ehTelaInterna(true)
                 .addAnchorPaneTelaInter(anchorPaneGeral)
                 .construir();
+
     }
 
     private void alterar() {
@@ -125,9 +125,9 @@ public class FXMLCadastroCursoController implements Initializable {
                 .ehTelaInterna(true)
                 .addAnchorPaneTelaInter(anchorPaneGeral)
                 .construir();
-
         FXMLCadastroCursoAlterarInserirController controller = (FXMLCadastroCursoAlterarInserirController) utilsTela.getController();
-        controller.inicializaCampos(tblViewCurso.getSelectionModel().getSelectedItem().getIdCurso());
+        controller.inicializarCampos(tblViewCurso.getSelectionModel().getSelectedItem().getIdCurso());
+
     }
 
     private void atualizar() {
@@ -143,8 +143,8 @@ public class FXMLCadastroCursoController implements Initializable {
             // Preenche tblview.
             observableListCurso = FXCollections.observableArrayList(listCurso);
             tblViewCurso.setItems(observableListCurso);
-
         }
+
     }
 
     private void excluir(Curso curso) {
@@ -152,7 +152,6 @@ public class FXMLCadastroCursoController implements Initializable {
                 .addTipoMsg(Alert.AlertType.CONFIRMATION)
                 .addMsgCabecalho("Deseja excluir o registro?")
                 .addMsgConteudo(curso.getDescCurso())
-                .mostrarIcone(false)
                 .exibir().getResult();
 
         if (resposta == ButtonType.YES) {
@@ -170,6 +169,6 @@ public class FXMLCadastroCursoController implements Initializable {
                         .exibir();
             }
         }
-    }
 
+    }
 }

@@ -76,7 +76,7 @@ public class FXMLTelaPrincipalController implements Initializable {
                 .addMsgConteudo("Sistemas de Informação - 7ºp \n"
                         + "Lucas Cardoso \n"
                         + "Guilherme Francisco \n"
-                        + "Jefferson Magalhães.")
+                        + "Jefferson Magalhães")
                 .addTipoMsg(Alert.AlertType.INFORMATION)
                 .exibir();
 

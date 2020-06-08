@@ -9,19 +9,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="700.0" style="-fx-border-width: 2px; -fx-border-color: #164755;" stylesheets="@../res/FXMLCSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.pitagoras.gestaoalunos.controller.FXMLLoginController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="700.0" style="-fx-border-width: 2px; -fx-border-color: #164755;" stylesheets="@../res/css/Style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.pitagoras.gestaoalunos.controller.FXMLLoginController">
    <left>
       <AnchorPane prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: #ebecf0;" BorderPane.alignment="CENTER">
          <children>
             <TextField fx:id="txtUsuario" alignment="CENTER" layoutX="60.0" layoutY="154.0" prefHeight="30.0" prefWidth="180.0" promptText="Informe o seu usuário" AnchorPane.topAnchor="154.0" />
             <PasswordField fx:id="txtSenha" alignment="CENTER" layoutX="60.0" layoutY="198.0" prefHeight="30.0" prefWidth="180.0" promptText="Informe sua senha" AnchorPane.bottomAnchor="116.0" />
-            <Button fx:id="btnEntrar" layoutX="42.0" layoutY="285.0" mnemonicParsing="false" onAction="#logar" prefHeight="30.0" prefWidth="100.0" styleClass="confirm" text="Entrar" textFill="WHITE" AnchorPane.bottomAnchor="31.0" />
+            <Button fx:id="btnEntrar" layoutX="42.0" layoutY="285.0" mnemonicParsing="false" onAction="#handleBtnEntrar" prefHeight="30.0" prefWidth="100.0" styleClass="confirm" text="Entrar" textFill="WHITE" AnchorPane.bottomAnchor="31.0" />
             <ImageView fitHeight="100.0" fitWidth="200.0" layoutX="94.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="30.0">
                <image>
                   <Image url="@../res/logo_jadatech_loginscreen.png" />
                </image>
             </ImageView>
-            <Button layoutX="159.0" layoutY="285.0" mnemonicParsing="false" onAction="#sair" text="Sair" />
+            <Button layoutX="159.0" layoutY="285.0" mnemonicParsing="false" onAction="#handleBtnSair" text="Sair" />
             <Label fx:id="lblAlerta" alignment="CENTER" contentDisplay="CENTER" layoutX="40.0" layoutY="248.0" prefHeight="20.0" prefWidth="220.0" style="-fx-text-fill: #c62828;" text="alerta" visible="false" />
          </children>
       </AnchorPane>
