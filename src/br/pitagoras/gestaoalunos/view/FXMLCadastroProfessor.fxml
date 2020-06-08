@@ -51,7 +51,7 @@
                             <contextMenu>
                                 <ContextMenu>
                                     <items>
-                                        <MenuItem fx:id="contextMenuItemAlterar" mnemonicParsing="false" onAction="#handleBtnEditar" text="Alterar" />
+                                        <MenuItem fx:id="contextMenuItemAlterar" mnemonicParsing="false" onAction="#handleBtnEditar" text="Editar" />
                                         <MenuItem fx:id="contextMenuItemExcluir" mnemonicParsing="false" onAction="#handleCtxtExcluir" text="Excluir" />
                                     </items>
                                 </ContextMenu>
