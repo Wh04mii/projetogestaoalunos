@@ -5,14 +5,14 @@ import java.text.ParseException;
 import javafx.scene.control.TextField;
 import javax.swing.text.MaskFormatter;
 
-public class TextFieldFormatter {
+public class FormatterMask {
 
     private final MaskFormatter mf;
     private TextField tf;
     private String CaracteresValidos;
     private String mask;
 
-    public TextFieldFormatter() {
+    public FormatterMask() {
         mf = new MaskFormatter();
     }
 

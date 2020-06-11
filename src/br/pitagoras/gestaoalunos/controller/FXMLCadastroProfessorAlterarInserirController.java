@@ -1,6 +1,6 @@
 package br.pitagoras.gestaoalunos.controller;
 
-import br.pitagoras.gestaoalunos.common.TextFieldFormatter;
+import br.pitagoras.gestaoalunos.common.FormatterMask;
 import br.pitagoras.gestaoalunos.common.Utils;
 import br.pitagoras.gestaoalunos.dao.ProfessorDAO;
 import br.pitagoras.gestaoalunos.model.Professor;
@@ -88,7 +88,7 @@ public class FXMLCadastroProfessorAlterarInserirController implements Initializa
     // Método para criar máscara no campo cpf
     @FXML
     private void mascaraCPFProf(KeyEvent event) {
-        TextFieldFormatter format = new TextFieldFormatter();
+        FormatterMask format = new FormatterMask();
          format.setMask("###.###.###-##");
          format.setCaracteresValidos("1234567890");
          format.setTf(txtCPF);
@@ -97,7 +97,7 @@ public class FXMLCadastroProfessorAlterarInserirController implements Initializa
     }
     @FXML
     void maskRA(KeyEvent event) {
-        TextFieldFormatter format = new TextFieldFormatter();
+        FormatterMask format = new FormatterMask();
          format.setMask("############");
          format.setCaracteresValidos("1234567890");
          format.setTf(txtRA);

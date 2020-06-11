@@ -1,7 +1,7 @@
 package br.pitagoras.gestaoalunos.controller;
 
 
-import br.pitagoras.gestaoalunos.common.TextFieldFormatter;
+import br.pitagoras.gestaoalunos.common.FormatterMask;
 import br.pitagoras.gestaoalunos.common.Utils;
 import br.pitagoras.gestaoalunos.dao.AlunoDAO;
 import br.pitagoras.gestaoalunos.model.Aluno;
@@ -88,7 +88,7 @@ public class FXMLCadastroAlunoAlterarInserirController implements Initializable 
     // método para inserir mascara no text field
      @FXML
     private void mascaraCPF(KeyEvent event) {
-         TextFieldFormatter format = new TextFieldFormatter();
+         FormatterMask format = new FormatterMask();
          format.setMask("###.###.###-##");
          format.setCaracteresValidos("1234567890");
          format.setTf(txtCPF);
@@ -98,7 +98,7 @@ public class FXMLCadastroAlunoAlterarInserirController implements Initializable 
     // Método para criar máscara para telefone
     @FXML
     private void maskTelAluno(KeyEvent event) {
-        TextFieldFormatter format = new TextFieldFormatter();
+        FormatterMask format = new FormatterMask();
          format.setMask("(##)#####-####");
          format.setCaracteresValidos("1234567890");
          format.setTf(txtTelefone);
