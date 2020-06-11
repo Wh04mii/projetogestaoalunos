@@ -1,5 +1,6 @@
 package br.pitagoras.gestaoalunos.controller;
 
+import br.pitagoras.gestaoalunos.common.TextFieldFormatter;
 import br.pitagoras.gestaoalunos.common.Utils;
 import br.pitagoras.gestaoalunos.dao.ProfessorDAO;
 import br.pitagoras.gestaoalunos.model.Professor;
@@ -15,6 +16,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class FXMLCadastroProfessorAlterarInserirController implements Initializable {
@@ -83,6 +85,25 @@ public class FXMLCadastroProfessorAlterarInserirController implements Initializa
                 .construir();
 
     }
+    // Método para criar máscara no campo cpf
+    @FXML
+    private void mascaraCPFProf(KeyEvent event) {
+        TextFieldFormatter format = new TextFieldFormatter();
+         format.setMask("###.###.###-##");
+         format.setCaracteresValidos("1234567890");
+         format.setTf(txtCPF);
+         format.formatter();
+
+    }
+    @FXML
+    void maskRA(KeyEvent event) {
+        TextFieldFormatter format = new TextFieldFormatter();
+         format.setMask("############");
+         format.setCaracteresValidos("1234567890");
+         format.setTf(txtRA);
+         format.formatter();
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
