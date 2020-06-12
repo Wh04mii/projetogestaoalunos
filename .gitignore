@@ -23,7 +23,7 @@
 hs_err_pid*
 
   
-nbproject/private/
+nbproject/
 **/nbproject/Makefile-*.mk
 **/nbproject/Package-*.bash
 build/
