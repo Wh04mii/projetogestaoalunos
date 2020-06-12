@@ -1,5 +1,3 @@
-//Teste do disciplo do guideveloper ..
-
 package br.pitagoras.gestaoalunos;
 
 import br.pitagoras.gestaoalunos.common.Utils;
