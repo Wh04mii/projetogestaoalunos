@@ -85,7 +85,7 @@ public class FXMLCadastroAlunoAlterarInserirController implements Initializable 
                 .construir();
 
     }
-    // método para inserir mascara no text field
+    /* método para inserir mascara no text field
      @FXML
     private void mascaraCPF(KeyEvent event) {
          FormatterMask format = new FormatterMask();
@@ -95,6 +95,10 @@ public class FXMLCadastroAlunoAlterarInserirController implements Initializable 
          format.formatter();
          
     }
+    
+    
+*/
+    /*
     // Método para criar máscara para telefone
     @FXML
     private void maskTelAluno(KeyEvent event) {
@@ -104,7 +108,7 @@ public class FXMLCadastroAlunoAlterarInserirController implements Initializable 
          format.setTf(txtTelefone);
          format.formatter();
     }
-
+*/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }

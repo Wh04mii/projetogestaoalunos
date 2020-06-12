@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="AnchorPane" fx:id="anchorPaneGeral" prefHeight="510.0" prefWidth="910.0" style="-fx-background-color: #ebecf0;" stylesheets="@../res/css/Style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.pitagoras.gestaoalunos.controller.FXMLCadastroAlunoAlterarInserirController">
+<AnchorPane id="AnchorPane" fx:id="anchorPaneGeral" prefHeight="510.0" prefWidth="910.0" style="-fx-background-color: #ebecf0;" stylesheets="@../res/css/Style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.pitagoras.gestaoalunos.controller.FXMLCadastroAlunoAlterarInserirController">
     <children>
         <AnchorPane fx:id="anchorPaneConteudo" style="-fx-border-width: 1px; -fx-border-color: #164755;" styleClass="root" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
             <children>
@@ -74,7 +74,7 @@
                                                 <Insets />
                                             </GridPane.margin>
                                         </TextField>
-                                        <TextField fx:id="txtCPF" onKeyReleased="#mascaraCPF" prefHeight="32.0" prefWidth="448.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                        <TextField fx:id="txtCPF" prefHeight="32.0" prefWidth="448.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                             <GridPane.margin>
                                                 <Insets right="550.0" />
                                             </GridPane.margin>
@@ -84,7 +84,7 @@
                                                 <Insets />
                                             </GridPane.margin>
                                         </TextField>
-                                        <TextField fx:id="txtTelefone" onKeyReleased="#maskTelAluno" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                        <TextField fx:id="txtTelefone" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                             <GridPane.margin>
                                                 <Insets right="550.0" />
                                             </GridPane.margin>
