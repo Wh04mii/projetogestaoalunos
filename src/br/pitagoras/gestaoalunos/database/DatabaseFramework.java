@@ -24,7 +24,7 @@ public class DatabaseFramework {
     }
 
     private DatabaseFramework() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("JadatechORM");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("GestaoAlunosOrm");
         em = emf.createEntityManager();
 
     }

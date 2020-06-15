@@ -12,6 +12,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class FXMLLoginController implements Initializable {
@@ -32,6 +36,11 @@ public class FXMLLoginController implements Initializable {
     private Button btnFechar;
 
     @FXML
+    private BorderPane telaGeral;
+    private double initialX;
+    private double initialY;
+
+    @FXML
     private void handleBtnSair(ActionEvent event) {
         System.exit(0);
 
@@ -47,6 +56,7 @@ public class FXMLLoginController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        eventos();
     }
 
     private boolean validarCampos() {
@@ -108,4 +118,28 @@ public class FXMLLoginController implements Initializable {
         }
     }
 
+    private void eventos() {
+        
+        // Ação tecla enter;
+        telaGeral.setOnKeyPressed((event) -> {
+           if (event.getCode() == KeyCode.ENTER && validarCampos()){
+               fazerLogin();
+           }            
+        });
+
+        // Mover tela
+        // Fonte: https://stackoverflow.com/questions/11780115/moving-an-undecorated-stage-in-javafx-2
+        telaGeral.setOnMousePressed((MouseEvent me) -> {
+            if (me.getButton() != MouseButton.MIDDLE) {
+                initialX = me.getSceneX();
+                initialY = me.getSceneY();
+            }
+        });
+
+        telaGeral.setOnMouseDragged((MouseEvent event) -> {
+            telaGeral.getScene().getWindow().setX(event.getScreenX() - initialX);
+            telaGeral.getScene().getWindow().setY(event.getScreenY() - initialY);
+        });
+
+    }
 }
